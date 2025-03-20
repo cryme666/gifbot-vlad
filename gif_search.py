@@ -19,11 +19,10 @@ def search_gif(query):
 
     if data['data']:
         gif_url = data["data"][0]["images"]["original"]["url"]
-        return gif_url  
-    
-
+        return gif_url 
 
 
 if __name__ == '__main__':
     query = input('Enter you search:')
     print(search_gif(query))
+
