@@ -33,20 +33,22 @@ def handle_query(call):
     if action == 'gif':
         gif_url = search_gif(query)
         if gif_url:
-            gif_data = requests.get(gif_url).content
-            with open('temp.gif','wb') as gif_file:
-                gif_file.write(gif_data)
+            bot.send_animation(call.message.chat.id,gif_url)
+        else:
+            bot.send_message(call.message.chat.id,'Вибач я нічого не знайшов.')          
+    else:
+        img_url = search_image(query)
+        if img_url:
+            img_data = requests.get(img_url).content
+            with open('temp.jpg','wb') as img_file:
+                img_file.write(img_data)
 
-            with open("temp.gif","rb") as gif_file:
-                bot.send_animation(call.message.chat.id,gif_file)
+            with open("temp.jpg","rb") as img_file:
+                bot.send_photo(call.message.chat.id,img_file)
             
-            os.remove('temp.gif')
+            os.remove('temp.jpg')
         else:
             bot.send_message(call.message.chat.id,'Вибач я нічого не знайшов.')
-          
-    else:
-        pass
-
-
+    
 if __name__ == '__main__':
     bot.polling(non_stop=True)
